@@ -1,98 +1,100 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# RecipeMate Backend (NestJS + MVC)
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Backend REST API untuk aplikasi **RecipeMate**, dibangun menggunakan framework **NestJS** dengan pola arsitektur **MVC (Model-View-Controller)** sebagai pemenuhan **Tugas 9 Praktikum Perancangan dan Pemrograman Web (PPW)**.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+- **Nama Mahasiswa:** Geusan Edurais Aria Daffa
+- **NIM:** 103122400026
+- **Kelas:** SE-08-01
+- **Program Studi:** S1 Software Engineering, Telkom University Purwokerto
+- **Repository Backend:** [https://github.com/Geusan31/recipe_mate_backend](https://github.com/Geusan31/recipe_mate_backend)
+- **Repository Frontend:** [https://github.com/Geusan31/recipe_mate](https://github.com/Geusan31/recipe_mate)
 
-## Description
+---
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## 🎯 Fitur & Pemenuhan Tugas 9
 
-## Project setup
+1. **Entitas Data Utama (`Recipe`):**
+   - Didefinisikan dalam [src/recipes/entities/recipe.entity.ts](file:///c:/Kuliah/Semester%205/Perancangan%20dan%20Pemrograman%20Web/teori/pertemuan9/recipe_mate_backend/src/recipes/entities/recipe.entity.ts) dengan lebih dari 5 field bertipe bervariasi (`id`, `slug`, `title`, `description`, `category`, `time`, `servings`, `difficulty`, `rating`, `ingredients`, `steps`, `createdAt`, `updatedAt`).
+2. **DTO & class-validator:**
+   - Didefinisikan dalam [src/recipes/dto/create-recipe.dto.ts](file:///c:/Kuliah/Semester%205/Perancangan%20dan%20Pemrograman%20Web/teori/pertemuan9/recipe_mate_backend/src/recipes/dto/create-recipe.dto.ts) dan [src/recipes/dto/update-recipe.dto.ts](file:///c:/Kuliah/Semester%205/Perancangan%20dan%20Pemrograman%20Web/teori/pertemuan9/recipe_mate_backend/src/recipes/dto/update-recipe.dto.ts).
+   - Menggunakan 8 aturan validasi: `@IsString()`, `@IsNotEmpty()`, `@MinLength(3)`, `@IsNumber()`, `@Min(1)`, `@Max(5)`, `@IsIn(['Mudah', 'Sedang', 'Sulit'])`, `@IsArray()`.
+3. **Service (In-Memory Array CRUD):**
+   - Didefinisikan dalam [src/recipes/recipes.service.ts](file:///c:/Kuliah/Semester%205/Perancangan%20dan%20Pemrograman%20Web/teori/pertemuan9/recipe_mate_backend/src/recipes/recipes.service.ts).
+   - Menyediakan operasi lengkap `create`, `findAll`, `findOne`, `update`, `remove`.
+4. **Controller & Dependency Injection:**
+   - Didefinisikan dalam [src/recipes/recipes.controller.ts](file:///c:/Kuliah/Semester%205/Perancangan%20dan%20Pemrograman%20Web/teori/pertemuan9/recipe_mate_backend/src/recipes/recipes.controller.ts).
+   - Menggunakan DI murni pada constructor untuk mengakses `RecipesService`.
+   - Mengimplementasikan seluruh HTTP method: `GET`, `POST`, `PATCH`, `DELETE`.
+5. **Penanganan Error (Built-in Exceptions):**
+   - `NotFoundException` (404) ketika ID/slug resep tidak ditemukan.
+   - `ConflictException` (409) ketika terdapat duplikasi judul/slug resep.
+   - `BadRequestException` (400) ketika validasi class-validator gagal.
+6. **Global Validation & CORS:**
+   - Diaktifkan di [src/main.ts](file:///c:/Kuliah/Semester%205/Perancangan%20dan%20Pemrograman%20Web/teori/pertemuan9/recipe_mate_backend/src/main.ts) (`app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }))` dan `app.enableCors()`).
+7. **Pengujian REST Client:**
+   - File siap uji di [test-requests.http](file:///c:/Kuliah/Semester%205/Perancangan%20dan%20Pemrograman%20Web/teori/pertemuan9/recipe_mate_backend/test-requests.http).
+8. **Integrasi Frontend React:**
+   - Tersambung live ke `recipe_mate` di port 5173 dengan halaman manajemen CRUD lengkap di `/kelola-resep`.
 
-```bash
-$ npm install
+---
+
+## 📁 Struktur Folder Proyek
+
+```text
+recipe_mate_backend/
+├── docs/
+│   ├── screenshots/                    # Tangkapan layar bukti pengujian Tugas 9
+│   │   ├── 00_folder_structure.png
+│   │   ├── 01_homepage.png
+│   │   ├── 02_recipes_page.png
+│   │   ├── 03_kelola_resep_page.png
+│   │   ├── 04_tambah_resep_form.png
+│   │   ├── 05_resep_berhasil_ditambahkan.png
+│   │   ├── 06_detail_resep_page.png
+│   │   ├── 07_rest_client_get_all.png
+│   │   ├── 08_rest_client_get_one.png
+│   │   ├── 09_rest_client_post_create.png
+│   │   ├── 10_rest_client_validation_error.png
+│   │   ├── 11_rest_client_conflict_error.png
+│   │   ├── 12_rest_client_not_found_error.png
+│   │   ├── 13_rest_client_patch_update.png
+│   │   └── 14_rest_client_delete_remove.png
+├── src/
+│   ├── recipes/
+│   │   ├── dto/
+│   │   │   ├── create-recipe.dto.ts
+│   │   │   └── update-recipe.dto.ts
+│   │   ├── entities/
+│   │   │   └── recipe.entity.ts
+│   │   ├── recipes.controller.ts
+│   │   ├── recipes.data.ts
+│   │   ├── recipes.module.ts
+│   │   └── recipes.service.ts
+│   ├── app.module.ts
+│   └── main.ts
+├── test-requests.http
+├── package.json
+└── README.md
 ```
 
-## Compile and run the project
+---
 
-```bash
-# development
-$ npm run start
+## 🚀 Cara Menjalankan Backend
 
-# watch mode
-$ npm run start:dev
+1. **Install dependencies:**
+   ```bash
+   npm install
+   ```
 
-# production mode
-$ npm run start:prod
-```
+2. **Jalankan development server:**
+   ```bash
+   npm run start:dev
+   ```
+   Server backend akan aktif di: `http://localhost:3000`
 
-## Run tests
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
-
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
-
-## Resources
-
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+3. **Jalankan frontend React (di folder `recipe_mate`):**
+   ```bash
+   cd ../recipe_mate
+   npm run dev
+   ```
+   Frontend aktif di: `http://localhost:5173`

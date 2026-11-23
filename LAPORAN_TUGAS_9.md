@@ -22,41 +22,34 @@ Proyek backend diinisialisasi menggunakan Nest CLI dengan package manager `npm`,
 - Branch `develop`: Branch integrasi pengembangan.
 - Branch fitur: `feature/recipes-mvc-crud` dan `feature/nest-backend-integration`.
 
-```bash
-nest new recipe_mate_backend --package-manager npm
-git init -b main
-git remote add origin https://github.com/Geusan31/recipe_mate_backend.git
-git checkout -b develop
-git checkout -b feature/recipes-mvc-crud
-```
+**Tangkapan Layar Terminal Inisialisasi NestJS:**  
+![Terminal Nest New](docs/screenshots/terminal_01_nest_new.png)
+
+**Tangkapan Layar Setup Branching Git:**  
+![Terminal Git Branching](docs/screenshots/terminal_04_git_branching.png)
 
 ---
 
 ### 2. Installasi Package yang Diperlukan (class-validator & class-transformer)
 Instalasi pustaka validasi DTO untuk menjalankan validasi skema payload data resep:
-```bash
-npm install class-validator class-transformer @nestjs/mapped-types
-```
+
+**Tangkapan Layar Terminal Instalasi Dependency:**  
+![Terminal Install Packages](docs/screenshots/terminal_02_install_packages.png)
 
 ---
 
 ### 3. Pembuatan Resource dan Entity Recipe
-Resource `recipes` dibuat dengan perintah Nest CLI (`nest g resource recipes`). Entity `Recipe` dikonfigurasi pada `src/recipes/entities/recipe.entity.ts` dengan struktur data yang dibutuhkan frontend RecipeMate (memiliki lebih dari 5 field dengan variasi tipe data: `string`, `number`, `Date`, `Array`, dan `object`):
+Resource `recipes` dibuat dengan perintah Nest CLI (`nest g resource recipes`).
 
-- `id`: string (Identifikasi unik resep)
-- `slug`: string (Slug ramah URL)
-- `title`: string (Nama resep)
-- `description`: string (Deskripsi hidangan)
-- `category`: string (Kategori sajian)
-- `time`: number (Waktu memasak dalam menit)
-- `servings`: number (Porsi)
-- `difficulty`: 'Mudah' | 'Sedang' | 'Sulit' (Enum kesulitan)
-- `rating`: number (Skor ulasan)
-- `ingredients`: Array<{ group: string, items: string[] }> (Daftar bahan)
-- `steps`: string[] (Tahapan memasak)
-- `createdAt` & `updatedAt`: Date (Timestamp)
+**Tangkapan Layar Terminal Generate Resource:**  
+![Terminal Nest Generate Resource](docs/screenshots/terminal_03_nest_g_resource.png)
 
-**Tangkapan Layar Struktur Folder:**  
+Entity `Recipe` dikonfigurasi pada `src/recipes/entities/recipe.entity.ts` dengan struktur data yang dibutuhkan frontend RecipeMate (memiliki lebih dari 5 field dengan variasi tipe data: `string`, `number`, `Date`, `Array`, dan `object`):
+
+**Tangkapan Layar Kode Entity Recipe:**  
+![Kode Entity Recipe](docs/screenshots/code_01_recipe_entity.png)
+
+**Tangkapan Layar Struktur Folder Proyek:**  
 ![Struktur Folder Proyek](docs/screenshots/00_folder_structure.png)
 
 ---
@@ -69,7 +62,8 @@ File `create-recipe.dto.ts` dibuat dengan 8 aturan validasi berbeda untuk memast
 - `@IsIn(['Mudah', 'Sedang', 'Sulit'])` untuk memastikan nilai tingkat kesulitan sesuai ketentuan.
 - `@IsArray()` untuk memastikan format bahan dan langkah berupa array.
 
-File `update-recipe.dto.ts` meng-inherit `CreateRecipeDto` menggunakan `PartialType` bawaan `@nestjs/mapped-types`.
+**Tangkapan Layar Kode Create Recipe DTO:**  
+![Kode Create Recipe DTO](docs/screenshots/code_02_create_recipe_dto.png)
 
 ---
 
@@ -91,20 +85,19 @@ File `recipes.controller.ts` memetakan seluruh HTTP Method ke method pada `Recip
 - `PATCH /recipes/:id`: Memanggil `recipesService.update()`
 - `DELETE /recipes/:id`: Memanggil `recipesService.remove()`
 
+**Tangkapan Layar Kode Controller:**  
+![Kode Controller Recipes](docs/screenshots/code_03_recipes_controller.png)
+
 ---
 
-### 7. Konfigurasi Global ValidationPipe dan CORS di Main
+### 7. Konfigurasi Global ValidationPipe dan CORS di Main.ts
 Pada `src/main.ts`, global pipe diaktifkan agar validasi DTO berjalan otomatis pada setiap request, serta CORS diaktifkan agar frontend React dapat mengakses API backend:
-```typescript
-app.enableCors({ origin: '*' });
-app.useGlobalPipes(
-  new ValidationPipe({
-    whitelist: true,
-    forbidNonWhitelisted: true,
-    transform: true,
-  }),
-);
-```
+
+**Tangkapan Layar Kode Main.ts:**  
+![Kode Main.ts](docs/screenshots/code_04_main_ts.png)
+
+**Tangkapan Layar Menjalankan Server Backend (npm run start:dev):**  
+![Terminal Nest Start Dev](docs/screenshots/terminal_05_nest_start_dev.png)
 
 ---
 
@@ -171,6 +164,11 @@ Frontend `recipe_mate` dihubungkan ke backend NestJS melalui service API `src/se
 
 ---
 
-### 10. Tautan Repository GitHub
+### 10. Merge dan Push ke Repository GitHub
+Seluruh pengerjaan pada feature branch digabungkan (*merge*) ke branch `develop` dan `main`, kemudian dipush ke GitHub.
+
+**Tangkapan Layar Terminal Git Merge & Push:**  
+![Terminal Git Push](docs/screenshots/terminal_06_git_push_all.png)
+
 - **Repository Backend NestJS:** [https://github.com/Geusan31/recipe_mate_backend](https://github.com/Geusan31/recipe_mate_backend)  
 - **Repository Frontend React:** [https://github.com/Geusan31/recipe_mate](https://github.com/Geusan31/recipe_mate)

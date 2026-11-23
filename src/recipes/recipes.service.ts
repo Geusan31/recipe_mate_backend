@@ -40,9 +40,9 @@ export class RecipesService {
     }
 
     const newRecipe: Recipe = {
+      ...createRecipeDto,
       id: String(Date.now()),
       slug,
-      ...createRecipeDto,
       rating: createRecipeDto.rating ?? 0,
       popularity: createRecipeDto.popularity ?? 60,
       categories: createRecipeDto.categories ?? [

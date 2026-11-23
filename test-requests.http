@@ -1,0 +1,136 @@
+### ========================================================
+### RecipeMate Backend API - REST Client Testing (Tugas 9)
+### Base URL: http://localhost:3000/recipes
+### ========================================================
+
+### 1. GET ALL RECIPES (Method: GET)
+GET http://localhost:3000/recipes
+Accept: application/json
+
+###
+
+### 2. SEARCH & FILTER RECIPES (Method: GET with Query)
+GET http://localhost:3000/recipes?search=rendang
+Accept: application/json
+
+###
+
+### 3. GET RECIPE BY ID (Method: GET)
+GET http://localhost:3000/recipes/1
+Accept: application/json
+
+###
+
+### 4. CREATE RECIPE - SUCCESS (Method: POST)
+POST http://localhost:3000/recipes
+Content-Type: application/json
+
+{
+  "title": "Ayam Geprek Sambal Korek",
+  "description": "Ayam goreng tepung renyah yang digeprek dengan sambal korek pedas gurih khas Solo.",
+  "category": "Makan Siang",
+  "categories": ["makan-siang", "pedas", "indonesia"],
+  "time": 30,
+  "servings": 2,
+  "difficulty": "Mudah",
+  "rating": 4.9,
+  "popularity": 92,
+  "image": "/images/recipes/ayam-geprek.jpg",
+  "ingredients": [
+    {
+      "group": "Bahan Utama",
+      "items": [
+        "2 potong dada ayam",
+        "1 butir telur",
+        "100 gram tepung bumbu serbaguna",
+        "Minyak untuk menggoreng"
+      ]
+    },
+    {
+      "group": "Sambal Korek",
+      "items": [
+        "15 buah cabai rawit merah",
+        "3 siung bawang putih",
+        "1/2 sendok teh garam",
+        "3 sendok makan minyak goreng panas"
+      ]
+    }
+  ],
+  "steps": [
+    "Lumuri ayam dengan sedikit garam dan merica, diamkan 15 menit.",
+    "Balur ayam dengan tepung, celupkan ke kocokan telur, balur lagi dengan tepung sambil diremas-remas.",
+    "Goreng ayam hingga matang dan renyah keemasan, tiriskan.",
+    "Ulek cabai rawit, bawang putih, dan garam kasar-kasar.",
+    "Siram sambal dengan minyak goreng yang benar-benar panas.",
+    "Letakkan ayam di atas cobek sambal, geprek hingga memar dan sambal merata."
+  ],
+  "tips": "Siram minyak yang benar-benar mendidih ke atas ulekan sambal untuk aroma yang maksimal.",
+  "tags": ["ayam", "pedas", "sambal", "goreng"]
+}
+
+###
+
+### 5. CREATE RECIPE - VALIDATION ERROR (Method: POST with invalid data - class-validator test)
+POST http://localhost:3000/recipes
+Content-Type: application/json
+
+{
+  "title": "A",
+  "description": "",
+  "time": 0,
+  "servings": -1,
+  "difficulty": "Sangat Sulit"
+}
+
+###
+
+### 6. CREATE RECIPE - CONFLICT ERROR (Method: POST duplicate title - ConflictException test)
+POST http://localhost:3000/recipes
+Content-Type: application/json
+
+{
+  "title": "Nasi Goreng Spesial",
+  "description": "Deskripsi duplikat",
+  "category": "Makan Siang",
+  "time": 20,
+  "servings": 2,
+  "difficulty": "Mudah",
+  "ingredients": [
+    {
+      "group": "Bahan",
+      "items": ["Nasi"]
+    }
+  ],
+  "steps": ["Goreng nasi"]
+}
+
+###
+
+### 7. GET RECIPE - NOT FOUND (Method: GET with non-existent ID - NotFoundException test)
+GET http://localhost:3000/recipes/999999
+Accept: application/json
+
+###
+
+### 8. UPDATE RECIPE (Method: PATCH)
+PATCH http://localhost:3000/recipes/1
+Content-Type: application/json
+
+{
+  "title": "Nasi Goreng Spesial Super Pedas",
+  "time": 25,
+  "difficulty": "Sedang",
+  "rating": 5.0
+}
+
+###
+
+### 9. DELETE RECIPE (Method: DELETE)
+DELETE http://localhost:3000/recipes/1
+Accept: application/json
+
+###
+
+### 10. VERIFY DELETED RECIPE (Method: GET after delete)
+GET http://localhost:3000/recipes/1
+Accept: application/json
